@@ -1,0 +1,27 @@
+# 精细：整 period 先时间均分 6 段 → 每段再 chunk 化（chunk_* 不改变 6 分边界，只约束每段输入长度）
+init_data_root: data/init_data
+label_xlsx: null
+
+model_type: cnn_transformer
+chunk_length: 1024
+max_chunks: 16
+hidden_dim: 256
+transformer_nhead: 4
+transformer_layers: 1
+transformer_ff_mult: 2
+transformer_dropout: 0.1
+
+batch_size: 256
+epochs: 512
+lr: 0.001
+weight_decay: 0.0001
+
+train_ratio: 0.9
+test_ratio: 0.1
+seed: 42
+
+num_workers: 0
+device: cuda
+
+tensorboard_logdir: runs/mas
+checkpoint_dir: checkpoints
