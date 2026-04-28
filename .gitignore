@@ -25,3 +25,6 @@ Thumbs.db
 coverage.xml
 htmlcov/
 data/
+data/init_data/
+
+init_segment_cache.pkl

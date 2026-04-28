@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import copy
+import pickle
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, List
+from typing import Any, List
 
 import numpy as np
 import pandas as pd
@@ -13,8 +14,8 @@ import scipy.io as sio
 try:
     import torch
     from torch.utils.data import Dataset
-except ImportError:  # pragma: no cover
-    torch = None
+except ImportError:
+    torch = None  # type: ignore[misc, assignment]
     Dataset = object  # type: ignore[misc, assignment]
 
 NUM_PERIODS = 8
@@ -47,7 +48,6 @@ def _subject_experiments(root: Path) -> dict[int, list[int]]:
 
 
 def to_nine_channels(seg: np.ndarray) -> np.ndarray:
-    """``seg`` is ``(C, T)`` after transpose; keep nine sEMG channels only (no zero padding)."""
     c, _t = seg.shape
     if c < NUM_EMG_CHANNELS:
         raise ValueError(f"Expected at least {NUM_EMG_CHANNELS} channels, got {c}")
@@ -55,10 +55,6 @@ def to_nine_channels(seg: np.ndarray) -> np.ndarray:
 
 
 def mat_to_period_arrays(mat_path: Path | str) -> List[np.ndarray]:
-    """
-    Load one ``*_processed_segment.mat`` and return eight ``float32`` arrays of shape
-    ``(9, T_i)`` (time lengths differ per period).
-    """
     mat_path = Path(mat_path)
     raw = sio.loadmat(mat_path.as_posix())
     segments: List[np.ndarray] = []
@@ -78,15 +74,9 @@ def mat_to_period_arrays(mat_path: Path | str) -> List[np.ndarray]:
 
 
 def split_period_emg_equal_parts(emg: np.ndarray, n_parts: int = SEGS_PER_PERIOD) -> List[np.ndarray]:
-    """
-    将单个治疗阶段整段肌电 ``(9, T)`` 沿时间**均分为 n_parts 份**（长度尽可能相等，余数由 ``numpy.array_split`` 分配），
-    与同一阶段内 ``n_parts`` 个绝对 MAS 标签顺序对齐。
-
-    注意：训练里的 ``chunk_length`` / ``max_chunks`` **不参与**本函数；它们只在之后对**每一段子肌电**单独做 token 化时使用。
-    """
     c, t = emg.shape
     if t < n_parts:
-        pad = np.zeros((c, n_parts - t), dtype=np.float32)
+        pad = np.zeros((c, n_parts), dtype=np.float32)
         emg = np.concatenate([emg.astype(np.float32, copy=False), pad], axis=1)
         t = n_parts
     ranges = np.array_split(np.arange(t, dtype=np.int64), n_parts)
@@ -99,17 +89,13 @@ class SampleMeta:
     subject_id: int
     exp_id: int
     mat_path: Path
-    label: np.ndarray  # (8, 6), float32
+    label: np.ndarray
 
 
 def build_sample_index(
     init_data_root: Path | str | None = None,
     label_xlsx: Path | str | None = None,
 ) -> List[SampleMeta]:
-    """
-    Pair every label row with the correct ``.mat`` using the FIFO rule described in the
-    module docstring.
-    """
     root = Path(init_data_root or _default_init_data_root())
     xlsx = Path(label_xlsx or (root / "output.xlsx"))
     df = pd.read_excel(xlsx, sheet_name="label", header=None)
@@ -133,62 +119,86 @@ def build_sample_index(
 
     remainder = {k: v for k, v in queues.items() if v}
     if remainder:
-        raise RuntimeError(f"Some segment files were not assigned a label row: {remainder}")
+        raise RuntimeError(f"Unused experiments remain (check Excel vs folders): {remainder!r}")
+
     return metas
 
 
-class InitSegmentDataset(Dataset):  # type: ignore[misc]
-    """``__getitem__`` → ``dict`` with ``periods``, ``label``, ``subject_id``, ``exp_id``."""
+class InitSegmentDataset(Dataset):
+    """One row per session: 8 concatenated-period EMG tensors + labels from Excel."""
 
     def __init__(
         self,
         init_data_root: Path | str | None = None,
         label_xlsx: Path | str | None = None,
+        *,
         return_torch: bool = True,
     ) -> None:
-        if return_torch and torch is None:
-            raise ImportError("PyTorch is required when return_torch=True")
-        self._return_torch = return_torch
-        self.samples = build_sample_index(init_data_root, label_xlsx)
+        self.init_data_root = Path(init_data_root or _default_init_data_root())
+        self.label_xlsx = label_xlsx
+        self.return_torch = bool(return_torch)
+        self.metas = build_sample_index(self.init_data_root, label_xlsx)
 
     def __len__(self) -> int:
-        return len(self.samples)
+        return len(self.metas)
 
-    def __getitem__(self, index: int) -> dict:
-        meta = self.samples[index]
-        periods = mat_to_period_arrays(meta.mat_path)
-        label = meta.label.copy()
-        if self._return_torch:
-            periods = [torch.from_numpy(p) for p in periods]
-            label = torch.from_numpy(label)
+    def __getitem__(self, idx: int) -> dict[str, Any]:
+        meta = self.metas[idx]
+        periods_np = mat_to_period_arrays(meta.mat_path)
+        if self.return_torch and torch is not None:
+            periods: Any = [torch.from_numpy(p.copy()) for p in periods_np]
+        else:
+            periods = [p.copy() for p in periods_np]
         return {
+            "subject_id": int(meta.subject_id),
+            "exp_id": int(meta.exp_id),
             "periods": periods,
-            "label": label,
-            "subject_id": meta.subject_id,
-            "exp_id": meta.exp_id,
-            "path": str(meta.mat_path),
         }
 
 
-def iter_metas(init_data_root: Path | str | None = None) -> Iterator[SampleMeta]:
-    yield from build_sample_index(init_data_root)
+class PickledInitSegmentDataset(Dataset):
+    """Loads ``save_init_segment_pickle`` output: list of dicts with ``subject_id``, ``exp_id``, ``periods``."""
+
+    def __init__(self, pickle_path: Path | str, *, return_torch: bool = True) -> None:
+        self.pickle_path = Path(pickle_path)
+        with self.pickle_path.open("rb") as f:
+            obj = pickle.load(f)
+        if not isinstance(obj, list):
+            raise ValueError(f"Expected list pickle from save_init_segment_pickle, got {type(obj)}")
+        self.rows = obj
+        self.return_torch = bool(return_torch)
+
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, idx: int) -> dict[str, Any]:
+        row = dict(self.rows[idx])
+        periods = list(row["periods"])
+        if self.return_torch and torch is not None:
+            row["periods"] = [
+                p if hasattr(p, "detach") else torch.from_numpy(np.asarray(p, dtype=np.float32)) for p in periods
+            ]
+        else:
+            row["periods"] = [
+                (p.detach().cpu().numpy() if hasattr(p, "detach") else np.asarray(p, dtype=np.float32)).astype(
+                    np.float32, copy=False
+                )
+                for p in periods
+            ]
+        return row
 
 
-# test
-if __name__ == "__main__":
-    path = "/data/zyj/project_mas/data/init_data"
-    dataset = InitSegmentDataset(init_data_root=path)
-    print(len(dataset))
-    data_sample = dataset[0]
-    print(data_sample.keys())
-    print("channels", data_sample["periods"][0].shape[0], "n_periods", len(data_sample["periods"]))
-    # 腕（wrist）
-    # 四指（four fingers）
-    # 拇指（thumb）
-    # 食指（index）
-    # 中指（middle）
-    # 无名指（ring）
-    # 小指（little finger）
-    # 静态牵伸
-    # FDS, FCU, FPL, FCR, EDM, EDC, ECU, EPB, ECR
-    print(data_sample["label"].shape)
+def save_init_segment_pickle(
+    out_path: Path | str,
+    init_data_root: Path | str | None = None,
+    label_xlsx: Path | str | None = None,
+    *,
+    return_torch: bool = False,
+) -> None:
+    """Materialize ``InitSegmentDataset`` to a pickle list for ``PickledInitSegmentDataset``."""
+    ds = InitSegmentDataset(init_data_root=init_data_root, label_xlsx=label_xlsx, return_torch=return_torch)
+    rows = [ds[i] for i in range(len(ds))]
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with out_path.open("wb") as f:
+        pickle.dump(rows, f, protocol=pickle.HIGHEST_PROTOCOL)
