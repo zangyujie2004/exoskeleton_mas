@@ -92,8 +92,67 @@ def collate_batch(batch: list[dict[str, Any]]) -> tuple[torch.Tensor, torch.Tens
     return x, y
 
 
+def parse_emg_channels(spec: str | None) -> set[int] | None:
+    """Parse e.g. ``'0,2'`` or ``'0, 2'`` → ``{0, 2}``. ``None``/empty → use all 9 channels."""
+    if spec is None or not str(spec).strip():
+        return None
+    out: set[int] = set()
+    for part in str(spec).split(","):
+        p = part.strip().strip("'\"")
+        if not p:
+            continue
+        if not p.lstrip("-").isdigit():
+            raise ValueError(f"Invalid EMG channel token {p!r}; use integers 0..8 comma-separated.")
+        c = int(p)
+        if c < 0 or c > 8:
+            raise ValueError(f"EMG channel index must be in [0, 8], got {c}")
+        out.add(c)
+    if not out:
+        return None
+    return out
+
+
+def apply_emg_channel_select(x: torch.Tensor, active: set[int] | None, *, num_channels: int = 9) -> torch.Tensor:
+    """Zero out EMG channels not in ``active``; model still sees shape (B, 9, T)."""
+    if active is None:
+        return x
+    if x.ndim != 3 or x.shape[1] != num_channels:
+        raise ValueError(f"Expected x shape (B, {num_channels}, T), got {tuple(x.shape)}")
+    out = x.clone()
+    for c in range(num_channels):
+        if c not in active:
+            out[:, c, :] = 0
+    return out
+
+
+def dataloader_to_xy_arrays_masked(loader: DataLoader, active: set[int]) -> tuple[np.ndarray, np.ndarray]:
+    """Like ``dataloader_to_xy_arrays`` but zeros inactive EMG channels before flattening."""
+    xs: list[np.ndarray] = []
+    ys: list[np.ndarray] = []
+    for x, y in loader:
+        if x.ndim != 3:
+            raise ValueError(f"Expected x (B, C, T), got {tuple(x.shape)}")
+        x = apply_emg_channel_select(x, active)
+        b = x.size(0)
+        xs.append(x.reshape(b, -1).numpy().astype(np.float64, copy=False))
+        ys.append(y.detach().numpy().reshape(-1).astype(np.float32, copy=False))
+    if not xs:
+        return np.zeros((0, 1), dtype=np.float64), np.zeros((0,), dtype=np.float32)
+    return np.concatenate(xs, axis=0), np.concatenate(ys, axis=0)
+
+
+def _near_constant_1d(a: np.ndarray, eps: float = 1e-12) -> bool:
+    """True if values are (almost) identical; avoids scipy ConstantInputWarning."""
+    a64 = np.asarray(a, dtype=np.float64).ravel()
+    if a64.size < 2:
+        return True
+    return bool(np.ptp(a64) < eps)
+
+
 def _pearson(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     if y_true.size < 2:
+        return float("nan")
+    if _near_constant_1d(y_true) or _near_constant_1d(y_pred):
         return float("nan")
     if pearsonr is not None:
         return float(pearsonr(y_true, y_pred)[0])
@@ -103,6 +162,8 @@ def _pearson(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
 def _spearman(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     if y_true.size < 2:
+        return float("nan")
+    if _near_constant_1d(y_true) or _near_constant_1d(y_pred):
         return float("nan")
     if spearmanr is not None:
         return float(spearmanr(y_true, y_pred)[0])
@@ -140,6 +201,7 @@ def train_one_epoch(
     aug_scale: float = 0.0,
     aug_channel_dropout: float = 0.0,
     max_grad_norm: float = 0.0,
+    emg_active_channels: set[int] | None = None,
 ) -> tuple[dict[str, float], int]:
     model.train()
     loss_fn = nn.SmoothL1Loss()
@@ -147,7 +209,7 @@ def train_one_epoch(
     for x, y in loader:
         x = x.to(device, non_blocking=True)
         y = y.to(device, non_blocking=True)
-        # Lightweight time-series augmentation for regularization.
+        # Lightweight time-series augmentation for regularization (on full EMG, then ablate channels).
         if aug_noise_std > 0:
             x = x + torch.randn_like(x) * aug_noise_std
         if aug_scale > 0:
@@ -156,6 +218,7 @@ def train_one_epoch(
         if aug_channel_dropout > 0:
             keep = (torch.rand(x.size(0), x.size(1), 1, device=x.device) > aug_channel_dropout).float()
             x = x * keep
+        x = apply_emg_channel_select(x, emg_active_channels)
         optimizer.zero_grad(set_to_none=True)
         pred = model(x)
         loss = loss_fn(pred, y)
@@ -178,12 +241,19 @@ def train_one_epoch(
 
 
 @torch.no_grad()
-def eval_one_epoch(model: nn.Module, loader: DataLoader, device: torch.device) -> dict[str, float]:
+def eval_one_epoch(
+    model: nn.Module,
+    loader: DataLoader,
+    device: torch.device,
+    *,
+    emg_active_channels: set[int] | None = None,
+) -> dict[str, float]:
     model.eval()
     ys, ps = [], []
     for x, y in loader:
         x = x.to(device, non_blocking=True)
         y = y.to(device, non_blocking=True)
+        x = apply_emg_channel_select(x, emg_active_channels)
         pred = model(x)
         ys.append(y.detach().cpu().numpy())
         ps.append(pred.detach().cpu().numpy())
@@ -193,13 +263,20 @@ def eval_one_epoch(model: nn.Module, loader: DataLoader, device: torch.device) -
 
 
 @torch.no_grad()
-def collect_predictions(model: nn.Module, loader: DataLoader, device: torch.device) -> tuple[np.ndarray, np.ndarray]:
+def collect_predictions(
+    model: nn.Module,
+    loader: DataLoader,
+    device: torch.device,
+    *,
+    emg_active_channels: set[int] | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
     model.eval()
     ys: list[np.ndarray] = []
     ps: list[np.ndarray] = []
     for x, y in loader:
         x = x.to(device, non_blocking=True)
         y = y.to(device, non_blocking=True)
+        x = apply_emg_channel_select(x, emg_active_channels)
         pred = model(x)
         ys.append(y.detach().cpu().numpy().reshape(-1))
         ps.append(pred.detach().cpu().numpy().reshape(-1))
@@ -278,7 +355,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--model_type",
         type=str,
-        default="random_forest",
+        default="resnet34",
         choices=(
             "resnet18",
             "resnet34",
@@ -340,6 +417,12 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default="0,1,7",
         help="Comma-separated period indices to keep (default 0,1,7). Use 'all' for every period.",
+    )
+    parser.add_argument(
+        "--emg_channels",
+        type=str,
+        default=None,
+        help="Comma-separated EMG channel indices 0–8 to use; others zeroed before model (e.g. 0,2). Omit for all 9.",
     )
     return parser.parse_args()
 
@@ -421,6 +504,7 @@ def main() -> None:
     ckpt_path.parent.mkdir(parents=True, exist_ok=True)
 
     period_filter = parse_period_filter(args.periods)
+    emg_active = parse_emg_channels(args.emg_channels)
     train_full_ds = WindowSpasmDataset(pickle_path, split="train", period_indices=period_filter)
     test_ds = WindowSpasmDataset(pickle_path, split="test", period_indices=period_filter)
     n_full = len(train_full_ds)
@@ -461,6 +545,9 @@ def main() -> None:
     pf_s = "all" if period_filter is None else ",".join(str(p) for p in period_filter)
     cpu_dev = torch.device("cpu")
 
+    best_epoch = 0
+    best_test_metrics: dict[str, float] | None = None
+
     if is_sklearn_model_type(args.model_type):
         model = build_model(
             model_type=args.model_type,
@@ -479,13 +566,18 @@ def main() -> None:
             num_workers=0,
             collate_fn=collate_batch,
         )
-        X_tr, y_tr = dataloader_to_xy_arrays(train_loader_fit)
+        if emg_active is not None:
+            X_tr, y_tr = dataloader_to_xy_arrays_masked(train_loader_fit, emg_active)
+        else:
+            X_tr, y_tr = dataloader_to_xy_arrays(train_loader_fit)
         model.fit(X_tr, y_tr)
-        tr_m = eval_one_epoch(model, train_loader_fit, cpu_dev)
-        va_m = eval_one_epoch(model, val_loader, cpu_dev)
-        te_m = eval_one_epoch(model, test_loader, cpu_dev)
+        tr_m = eval_one_epoch(model, train_loader_fit, cpu_dev, emg_active_channels=emg_active)
+        va_m = eval_one_epoch(model, val_loader, cpu_dev, emg_active_channels=emg_active)
+        te_m = eval_one_epoch(model, test_loader, cpu_dev, emg_active_channels=emg_active)
         best_test_mae = te_m["mae"]
+        best_test_metrics = dict(te_m)
         last_ep = 1
+        best_epoch = last_ep
         for k, v in tr_m.items():
             writer.add_scalar(f"epoch/train_{k}", v, last_ep)
         for k, v in va_m.items():
@@ -508,11 +600,13 @@ def main() -> None:
                 "metrics_train": tr_m,
                 "seed": seed,
                 "pickle_path": str(pickle_path.resolve()),
+                "emg_active_channels": sorted(emg_active) if emg_active is not None else None,
             },
             ckpt_path,
         )
+        ch_s = "all 9" if emg_active is None else ",".join(str(c) for c in sorted(emg_active))
         print(
-            f"[info] model={args.model_type} (sklearn) | periods={pf_s} | "
+            f"[info] model={args.model_type} (sklearn) | periods={pf_s} | EMG channels={ch_s} | "
             f"train/val/test={len(train_ds)}/{len(val_ds)}/{len(test_ds)} | n_train={len(y_tr)} | device=cpu"
         )
         print(
@@ -543,8 +637,9 @@ def main() -> None:
             min_lr=float(args.min_lr),
         )
 
+        ch_s = "all 9" if emg_active is None else ",".join(str(c) for c in sorted(emg_active))
         print(
-            f"[info] model={args.model_type} | periods={pf_s} | "
+            f"[info] model={args.model_type} | periods={pf_s} | EMG channels={ch_s} | "
             f"train/val/test={len(train_ds)}/{len(val_ds)}/{len(test_ds)} "
             f"| batch_size={batch_size} | wd={weight_decay} | resnet_drop={resnet_dropout} head_drop={resnet_head_dropout} "
             f"| clip={max_grad_norm} | aug noise/scale/ch_drop={aug_noise_std}/{aug_scale}/{aug_channel_dropout} "
@@ -571,9 +666,10 @@ def main() -> None:
                 aug_scale=aug_scale,
                 aug_channel_dropout=aug_channel_dropout,
                 max_grad_norm=max_grad_norm,
+                emg_active_channels=emg_active,
             )
-            va_m = eval_one_epoch(model, val_loader, device)
-            te_m = eval_one_epoch(model, test_loader, device)
+            va_m = eval_one_epoch(model, val_loader, device, emg_active_channels=emg_active)
+            te_m = eval_one_epoch(model, test_loader, device, emg_active_channels=emg_active)
             scheduler.step(te_m["mae"])
 
             for k, v in tr_m.items():
@@ -586,6 +682,8 @@ def main() -> None:
 
             if te_m["mae"] < best_test_mae - float(args.early_stop_min_delta):
                 best_test_mae = te_m["mae"]
+                best_epoch = ep
+                best_test_metrics = dict(te_m)
                 no_improve = 0
                 torch.save(
                     {
@@ -603,6 +701,7 @@ def main() -> None:
                         "metrics_test": te_m,
                         "seed": seed,
                         "pickle_path": str(pickle_path.resolve()),
+                        "emg_active_channels": sorted(emg_active) if emg_active is not None else None,
                     },
                     ckpt_path,
                 )
@@ -636,7 +735,9 @@ def main() -> None:
             model = model.to(scatter_dev)
         else:
             model.load_state_dict(ck["model"])
-        yt_te, yp_te = collect_predictions(model, test_loader, scatter_dev)
+        _emg_ck = ck.get("emg_active_channels")
+        scatter_emg: set[int] | None = set(int(c) for c in _emg_ck) if _emg_ck is not None else None
+        yt_te, yp_te = collect_predictions(model, test_loader, scatter_dev, emg_active_channels=scatter_emg)
         band = _scatter_diag_band(yt_te, yp_te, args.scatter_band)
         save_test_scatter(
             yt_te,
@@ -655,6 +756,18 @@ def main() -> None:
     writer.close()
     print(f"[done] best checkpoint: {ckpt_path.resolve()}")
     print(f"[done] tensorboard logdir: {logdir.resolve()}")
+    if best_test_metrics is not None:
+        bm = best_test_metrics
+        sel = (
+            "best epoch by lowest test MAE (checkpoint matches this epoch)"
+            if not is_sklearn_model_type(args.model_type)
+            else "sklearn single fit; test metrics below"
+        )
+        print(
+            f"[summary] test set | {sel} | epoch={best_epoch} | "
+            f"MAE={bm['mae']:.6f} | RMSE={bm['rmse']:.6f} | R2={bm['r2']:.6f} | "
+            f"Pearson={bm['pearson']:.6f} | Spearman={bm['spearman']:.6f}"
+        )
 
 
 if __name__ == "__main__":

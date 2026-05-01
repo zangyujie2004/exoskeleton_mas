@@ -6,6 +6,7 @@ import torch.nn as nn
 from typing import Any
 
 from models.cnn_base import build_resnet1d18, build_resnet1d34
+from models.res18 import build_resnet18_emg_2ch
 
 
 def build_model(
@@ -30,6 +31,13 @@ def build_model(
         return build_sklearn_from_cfg(model_type, sklearn_cfg or {}, random_state=int(seed))
 
     bw = hidden_dim // 4 if hidden_dim >= 64 else 64
+    if model_type in ("resnet18_2ch", "res18_2ch", "resnet18_emg2"):
+        return build_resnet18_emg_2ch(
+            out_dim=out_dim,
+            base_width=bw,
+            dropout=resnet_dropout,
+            head_dropout=resnet_head_dropout,
+        )
     if model_type in ("resnet18", "resnet1d18", "res18"):
         return build_resnet1d18(
             in_channels=9,

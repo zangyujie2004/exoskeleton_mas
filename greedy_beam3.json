@@ -1,0 +1,1203 @@
+{
+  "greedy_forward_train": true,
+  "greedy_mode": "beam",
+  "beam_width": 3,
+  "n_trains": 117,
+  "selection_metric": "test_mae_masked",
+  "test_eval_on_path_models": [
+    {
+      "step_k": 1,
+      "k_channels": 1,
+      "active": [
+        6
+      ],
+      "mae": 0.3544970154762268,
+      "rmse": 0.48740050196647644,
+      "r2": 0.3717436204180965,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step01_k1.pt",
+      "delta_mae_vs_full": -0.025639712810516357,
+      "mae_improvement_vs_full": 0.025639712810516357
+    },
+    {
+      "step_k": 2,
+      "k_channels": 2,
+      "active": [
+        0,
+        6
+      ],
+      "mae": 0.3372211456298828,
+      "rmse": 0.4268749952316284,
+      "r2": 0.5180894977900778,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step02_k2.pt",
+      "delta_mae_vs_full": -0.04291558265686035,
+      "mae_improvement_vs_full": 0.04291558265686035
+    },
+    {
+      "step_k": 3,
+      "k_channels": 3,
+      "active": [
+        0,
+        3,
+        6
+      ],
+      "mae": 0.3456915318965912,
+      "rmse": 0.44752827286720276,
+      "r2": 0.47032932752161505,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step03_k3.pt",
+      "delta_mae_vs_full": -0.03444519639015198,
+      "mae_improvement_vs_full": 0.03444519639015198
+    },
+    {
+      "step_k": 4,
+      "k_channels": 4,
+      "active": [
+        0,
+        3,
+        5,
+        6
+      ],
+      "mae": 0.33802109956741333,
+      "rmse": 0.4425901174545288,
+      "r2": 0.48195395653803996,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step04_k4.pt",
+      "delta_mae_vs_full": -0.042115628719329834,
+      "mae_improvement_vs_full": 0.042115628719329834
+    },
+    {
+      "step_k": 5,
+      "k_channels": 5,
+      "active": [
+        0,
+        2,
+        3,
+        5,
+        6
+      ],
+      "mae": 0.3487756550312042,
+      "rmse": 0.4403913617134094,
+      "r2": 0.48708838829757295,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step05_k5.pt",
+      "delta_mae_vs_full": -0.03136107325553894,
+      "mae_improvement_vs_full": 0.03136107325553894
+    },
+    {
+      "step_k": 6,
+      "k_channels": 6,
+      "active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "mae": 0.3495122790336609,
+      "rmse": 0.4378867447376251,
+      "r2": 0.49290592591108606,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step06_k6.pt",
+      "delta_mae_vs_full": -0.030624449253082275,
+      "mae_improvement_vs_full": 0.030624449253082275
+    },
+    {
+      "step_k": 7,
+      "k_channels": 7,
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "mae": 0.3523203134536743,
+      "rmse": 0.4589279890060425,
+      "r2": 0.44300151589302694,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step07_k7.pt",
+      "delta_mae_vs_full": -0.027816414833068848,
+      "mae_improvement_vs_full": 0.027816414833068848
+    },
+    {
+      "step_k": 8,
+      "k_channels": 8,
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "mae": 0.37314745783805847,
+      "rmse": 0.5079931616783142,
+      "r2": 0.317534608438821,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step08_k8.pt",
+      "delta_mae_vs_full": -0.006989270448684692,
+      "mae_improvement_vs_full": 0.006989270448684692
+    },
+    {
+      "step_k": 9,
+      "k_channels": 9,
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "mae": 0.38013672828674316,
+      "rmse": 0.48568642139434814,
+      "r2": 0.3761546878681812,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step09_k9.pt",
+      "delta_mae_vs_full": 0.0,
+      "mae_improvement_vs_full": 0.0
+    }
+  ],
+  "best_on_test_mae": {
+    "step_k": 2,
+    "k_channels": 2,
+    "active": [
+      0,
+      6
+    ],
+    "mae": 0.3372211456298828,
+    "rmse": 0.4268749952316284,
+    "r2": 0.5180894977900778,
+    "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step02_k2.pt"
+  },
+  "test_mae_full_model_path": 0.38013672828674316,
+  "beam_steps": [
+    {
+      "step_k": 1,
+      "beam": [
+        {
+          "active": [
+            6
+          ],
+          "best_test_mae": 0.3544970154762268,
+          "best_epoch": 12,
+          "metrics_test": {
+            "mae": 0.3544970154762268,
+            "rmse": 0.48740050196647644,
+            "r2": 0.3717436204180965,
+            "pearson": 0.6264903545379639,
+            "spearman": 0.6167136071023678
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand06.pt",
+          "parent_checkpoint": null,
+          "parent_active": null,
+          "added_channel": null,
+          "step_k": 1
+        },
+        {
+          "active": [
+            7
+          ],
+          "best_test_mae": 0.3545699715614319,
+          "best_epoch": 9,
+          "metrics_test": {
+            "mae": 0.3545699715614319,
+            "rmse": 0.47974881529808044,
+            "r2": 0.39131476292825884,
+            "pearson": 0.6269091963768005,
+            "spearman": 0.5819215570712056
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand07.pt",
+          "parent_checkpoint": null,
+          "parent_active": null,
+          "added_channel": null,
+          "step_k": 1
+        },
+        {
+          "active": [
+            0
+          ],
+          "best_test_mae": 0.35922011733055115,
+          "best_epoch": 28,
+          "metrics_test": {
+            "mae": 0.35922011733055115,
+            "rmse": 0.4497319757938385,
+            "r2": 0.4651001166732015,
+            "pearson": 0.6883236169815063,
+            "spearman": 0.6724808584102716
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand00.pt",
+          "parent_checkpoint": null,
+          "parent_active": null,
+          "added_channel": null,
+          "step_k": 1
+        }
+      ]
+    },
+    {
+      "step_k": 2,
+      "beam": [
+        {
+          "active": [
+            0,
+            6
+          ],
+          "best_test_mae": 0.3372211456298828,
+          "best_epoch": 20,
+          "metrics_test": {
+            "mae": 0.3372211456298828,
+            "rmse": 0.4268749952316284,
+            "r2": 0.5180894977900778,
+            "pearson": 0.7314181923866272,
+            "spearman": 0.7565942354416784
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp001.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand06.pt",
+          "parent_active": [
+            6
+          ],
+          "added_channel": 0,
+          "step_k": 2
+        },
+        {
+          "active": [
+            0,
+            5
+          ],
+          "best_test_mae": 0.35122376680374146,
+          "best_epoch": 19,
+          "metrics_test": {
+            "mae": 0.35122376680374146,
+            "rmse": 0.4708642363548279,
+            "r2": 0.41365076457675676,
+            "pearson": 0.6485786437988281,
+            "spearman": 0.7073508377828401
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp021.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand00.pt",
+          "parent_active": [
+            0
+          ],
+          "added_channel": 5,
+          "step_k": 2
+        },
+        {
+          "active": [
+            0,
+            4
+          ],
+          "best_test_mae": 0.35774704813957214,
+          "best_epoch": 20,
+          "metrics_test": {
+            "mae": 0.35774704813957214,
+            "rmse": 0.479812353849411,
+            "r2": 0.3911534906084274,
+            "pearson": 0.6347902417182922,
+            "spearman": 0.6297692021752608
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp020.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand00.pt",
+          "parent_active": [
+            0
+          ],
+          "added_channel": 4,
+          "step_k": 2
+        }
+      ]
+    },
+    {
+      "step_k": 3,
+      "beam": [
+        {
+          "active": [
+            0,
+            3,
+            6
+          ],
+          "best_test_mae": 0.3456915318965912,
+          "best_epoch": 19,
+          "metrics_test": {
+            "mae": 0.3456915318965912,
+            "rmse": 0.44752827286720276,
+            "r2": 0.47032932752161505,
+            "pearson": 0.7098674178123474,
+            "spearman": 0.6778686842175519
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp003.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp001.pt",
+          "parent_active": [
+            0,
+            6
+          ],
+          "added_channel": 3,
+          "step_k": 3
+        },
+        {
+          "active": [
+            0,
+            3,
+            5
+          ],
+          "best_test_mae": 0.3489382863044739,
+          "best_epoch": 29,
+          "metrics_test": {
+            "mae": 0.3489382863044739,
+            "rmse": 0.45614853501319885,
+            "r2": 0.4497278738288558,
+            "pearson": 0.6919360160827637,
+            "spearman": 0.7005310142134268
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp010.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp021.pt",
+          "parent_active": [
+            0,
+            5
+          ],
+          "added_channel": 3,
+          "step_k": 3
+        },
+        {
+          "active": [
+            0,
+            4,
+            5
+          ],
+          "best_test_mae": 0.3504406809806824,
+          "best_epoch": 23,
+          "metrics_test": {
+            "mae": 0.3504406809806824,
+            "rmse": 0.46460020542144775,
+            "r2": 0.4291476941540334,
+            "pearson": 0.6608284711837769,
+            "spearman": 0.6675462724646087
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp011.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp021.pt",
+          "parent_active": [
+            0,
+            5
+          ],
+          "added_channel": 4,
+          "step_k": 3
+        }
+      ]
+    },
+    {
+      "step_k": 4,
+      "beam": [
+        {
+          "active": [
+            0,
+            3,
+            5,
+            6
+          ],
+          "best_test_mae": 0.33802109956741333,
+          "best_epoch": 30,
+          "metrics_test": {
+            "mae": 0.33802109956741333,
+            "rmse": 0.4425901174545288,
+            "r2": 0.48195395653803996,
+            "pearson": 0.7038087844848633,
+            "spearman": 0.7025198234726223
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp004.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp003.pt",
+          "parent_active": [
+            0,
+            3,
+            6
+          ],
+          "added_channel": 5,
+          "step_k": 4
+        },
+        {
+          "active": [
+            0,
+            3,
+            4,
+            5
+          ],
+          "best_test_mae": 0.34863173961639404,
+          "best_epoch": 21,
+          "metrics_test": {
+            "mae": 0.34863173961639404,
+            "rmse": 0.46381473541259766,
+            "r2": 0.4310762840491611,
+            "pearson": 0.692489504814148,
+            "spearman": 0.7031062636713671
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp009.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp010.pt",
+          "parent_active": [
+            0,
+            3,
+            5
+          ],
+          "added_channel": 4,
+          "step_k": 4
+        },
+        {
+          "active": [
+            0,
+            2,
+            4,
+            5
+          ],
+          "best_test_mae": 0.36069655418395996,
+          "best_epoch": 21,
+          "metrics_test": {
+            "mae": 0.36069655418395996,
+            "rmse": 0.4577365219593048,
+            "r2": 0.4458898692744987,
+            "pearson": 0.6894479990005493,
+            "spearman": 0.6560474526159159
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp014.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp011.pt",
+          "parent_active": [
+            0,
+            4,
+            5
+          ],
+          "added_channel": 2,
+          "step_k": 4
+        }
+      ]
+    },
+    {
+      "step_k": 5,
+      "beam": [
+        {
+          "active": [
+            0,
+            2,
+            3,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3487756550312042,
+          "best_epoch": 30,
+          "metrics_test": {
+            "mae": 0.3487756550312042,
+            "rmse": 0.4403913617134094,
+            "r2": 0.48708838829757295,
+            "pearson": 0.7043490409851074,
+            "spearman": 0.7006251621380695
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp002.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp004.pt",
+          "parent_active": [
+            0,
+            3,
+            5,
+            6
+          ],
+          "added_channel": 2,
+          "step_k": 5
+        },
+        {
+          "active": [
+            0,
+            3,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3497481942176819,
+          "best_epoch": 23,
+          "metrics_test": {
+            "mae": 0.3497481942176819,
+            "rmse": 0.46484529972076416,
+            "r2": 0.4285452483097649,
+            "pearson": 0.6771772503852844,
+            "spearman": 0.7267610164438844
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp004.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp004.pt",
+          "parent_active": [
+            0,
+            3,
+            5,
+            6
+          ],
+          "added_channel": 7,
+          "step_k": 5
+        },
+        {
+          "active": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "best_test_mae": 0.35049915313720703,
+          "best_epoch": 20,
+          "metrics_test": {
+            "mae": 0.35049915313720703,
+            "rmse": 0.46862074732780457,
+            "r2": 0.4192249388729731,
+            "pearson": 0.667098879814148,
+            "spearman": 0.6850511670592595
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp006.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp009.pt",
+          "parent_active": [
+            0,
+            3,
+            4,
+            5
+          ],
+          "added_channel": 1,
+          "step_k": 5
+        }
+      ]
+    },
+    {
+      "step_k": 6,
+      "beam": [
+        {
+          "active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.340618371963501,
+          "best_epoch": 29,
+          "metrics_test": {
+            "mae": 0.340618371963501,
+            "rmse": 0.4336235225200653,
+            "r2": 0.502731851020819,
+            "pearson": 0.7090809941291809,
+            "spearman": 0.7162954455427136
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp007.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp004.pt",
+          "parent_active": [
+            0,
+            3,
+            5,
+            6,
+            7
+          ],
+          "added_channel": 4,
+          "step_k": 6
+        },
+        {
+          "active": [
+            0,
+            2,
+            3,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3448464572429657,
+          "best_epoch": 31,
+          "metrics_test": {
+            "mae": 0.3448464572429657,
+            "rmse": 0.43498650193214417,
+            "r2": 0.4996009452151109,
+            "pearson": 0.7141379117965698,
+            "spearman": 0.7025981165736224
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp006.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp004.pt",
+          "parent_active": [
+            0,
+            3,
+            5,
+            6,
+            7
+          ],
+          "added_channel": 2,
+          "step_k": 6
+        },
+        {
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3495122790336609,
+          "best_epoch": 27,
+          "metrics_test": {
+            "mae": 0.3495122790336609,
+            "rmse": 0.4378867447376251,
+            "r2": 0.49290592591108606,
+            "pearson": 0.7090809345245361,
+            "spearman": 0.683463801934694
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp002.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp002.pt",
+          "parent_active": [
+            0,
+            2,
+            3,
+            5,
+            6
+          ],
+          "added_channel": 4,
+          "step_k": 6
+        }
+      ]
+    },
+    {
+      "step_k": 7,
+      "beam": [
+        {
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3523203134536743,
+          "best_epoch": 30,
+          "metrics_test": {
+            "mae": 0.3523203134536743,
+            "rmse": 0.4589279890060425,
+            "r2": 0.44300151589302694,
+            "pearson": 0.6722143888473511,
+            "spearman": 0.6467495827711576
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp007.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp002.pt",
+          "parent_active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "added_channel": 1,
+          "step_k": 7
+        },
+        {
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.35790884494781494,
+          "best_epoch": 21,
+          "metrics_test": {
+            "mae": 0.35790884494781494,
+            "rmse": 0.4540649652481079,
+            "r2": 0.45474339050606405,
+            "pearson": 0.6897743940353394,
+            "spearman": 0.6735384048750259
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp008.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp002.pt",
+          "parent_active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "added_channel": 7,
+          "step_k": 7
+        },
+        {
+          "active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "best_test_mae": 0.3843204379081726,
+          "best_epoch": 22,
+          "metrics_test": {
+            "mae": 0.3843204379081726,
+            "rmse": 0.493737131357193,
+            "r2": 0.35530166652833783,
+            "pearson": 0.6243628859519958,
+            "spearman": 0.6592333704249794
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp003.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp007.pt",
+          "parent_active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "added_channel": 8,
+          "step_k": 7
+        }
+      ]
+    },
+    {
+      "step_k": 8,
+      "beam": [
+        {
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "best_test_mae": 0.37314745783805847,
+          "best_epoch": 28,
+          "metrics_test": {
+            "mae": 0.37314745783805847,
+            "rmse": 0.5079931616783142,
+            "r2": 0.317534608438821,
+            "pearson": 0.6030735969543457,
+            "spearman": 0.6221834816219985
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp002.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp007.pt",
+          "parent_active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "added_channel": 8,
+          "step_k": 8
+        },
+        {
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3795336186885834,
+          "best_epoch": 28,
+          "metrics_test": {
+            "mae": 0.3795336186885834,
+            "rmse": 0.5012356042861938,
+            "r2": 0.3355707303856894,
+            "pearson": 0.6017088294029236,
+            "spearman": 0.6173991399488787
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp001.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp007.pt",
+          "parent_active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "added_channel": 7,
+          "step_k": 8
+        },
+        {
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "best_test_mae": 0.3832288384437561,
+          "best_epoch": 29,
+          "metrics_test": {
+            "mae": 0.3832288384437561,
+            "rmse": 0.47886234521865845,
+            "r2": 0.3935620814957066,
+            "pearson": 0.6823179721832275,
+            "spearman": 0.677688583330237
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp006.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp003.pt",
+          "parent_active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "added_channel": 2,
+          "step_k": 8
+        }
+      ]
+    },
+    {
+      "step_k": 9,
+      "beam": [
+        {
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "best_test_mae": 0.38013672828674316,
+          "best_epoch": 23,
+          "metrics_test": {
+            "mae": 0.38013672828674316,
+            "rmse": 0.48568642139434814,
+            "r2": 0.3761546878681812,
+            "pearson": 0.6171062588691711,
+            "spearman": 0.6097258115857263
+          },
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step09_exp001.pt",
+          "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp002.pt",
+          "parent_active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "added_channel": 7,
+          "step_k": 9
+        }
+      ]
+    }
+  ],
+  "beam_winner_terminal": {
+    "active": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "best_test_mae": 0.38013672828674316,
+    "best_epoch": 23,
+    "metrics_test": {
+      "mae": 0.38013672828674316,
+      "rmse": 0.48568642139434814,
+      "r2": 0.3761546878681812,
+      "pearson": 0.6171062588691711,
+      "spearman": 0.6097258115857263
+    },
+    "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step09_exp001.pt",
+    "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp002.pt",
+    "parent_active": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ],
+    "added_channel": 7,
+    "step_k": 9
+  },
+  "beam_best_path_chain": [
+    {
+      "active": [
+        6
+      ],
+      "best_test_mae": 0.3544970154762268,
+      "best_epoch": 12,
+      "metrics_test": {
+        "mae": 0.3544970154762268,
+        "rmse": 0.48740050196647644,
+        "r2": 0.3717436204180965,
+        "pearson": 0.6264903545379639,
+        "spearman": 0.6167136071023678
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand06.pt",
+      "parent_checkpoint": null,
+      "parent_active": null,
+      "added_channel": null,
+      "step_k": 1
+    },
+    {
+      "active": [
+        0,
+        6
+      ],
+      "best_test_mae": 0.3372211456298828,
+      "best_epoch": 20,
+      "metrics_test": {
+        "mae": 0.3372211456298828,
+        "rmse": 0.4268749952316284,
+        "r2": 0.5180894977900778,
+        "pearson": 0.7314181923866272,
+        "spearman": 0.7565942354416784
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp001.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step01_cand06.pt",
+      "parent_active": [
+        6
+      ],
+      "added_channel": 0,
+      "step_k": 2
+    },
+    {
+      "active": [
+        0,
+        3,
+        6
+      ],
+      "best_test_mae": 0.3456915318965912,
+      "best_epoch": 19,
+      "metrics_test": {
+        "mae": 0.3456915318965912,
+        "rmse": 0.44752827286720276,
+        "r2": 0.47032932752161505,
+        "pearson": 0.7098674178123474,
+        "spearman": 0.6778686842175519
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp003.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step02_exp001.pt",
+      "parent_active": [
+        0,
+        6
+      ],
+      "added_channel": 3,
+      "step_k": 3
+    },
+    {
+      "active": [
+        0,
+        3,
+        5,
+        6
+      ],
+      "best_test_mae": 0.33802109956741333,
+      "best_epoch": 30,
+      "metrics_test": {
+        "mae": 0.33802109956741333,
+        "rmse": 0.4425901174545288,
+        "r2": 0.48195395653803996,
+        "pearson": 0.7038087844848633,
+        "spearman": 0.7025198234726223
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp004.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step03_exp003.pt",
+      "parent_active": [
+        0,
+        3,
+        6
+      ],
+      "added_channel": 5,
+      "step_k": 4
+    },
+    {
+      "active": [
+        0,
+        2,
+        3,
+        5,
+        6
+      ],
+      "best_test_mae": 0.3487756550312042,
+      "best_epoch": 30,
+      "metrics_test": {
+        "mae": 0.3487756550312042,
+        "rmse": 0.4403913617134094,
+        "r2": 0.48708838829757295,
+        "pearson": 0.7043490409851074,
+        "spearman": 0.7006251621380695
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp002.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step04_exp004.pt",
+      "parent_active": [
+        0,
+        3,
+        5,
+        6
+      ],
+      "added_channel": 2,
+      "step_k": 5
+    },
+    {
+      "active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "best_test_mae": 0.3495122790336609,
+      "best_epoch": 27,
+      "metrics_test": {
+        "mae": 0.3495122790336609,
+        "rmse": 0.4378867447376251,
+        "r2": 0.49290592591108606,
+        "pearson": 0.7090809345245361,
+        "spearman": 0.683463801934694
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp002.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step05_exp002.pt",
+      "parent_active": [
+        0,
+        2,
+        3,
+        5,
+        6
+      ],
+      "added_channel": 4,
+      "step_k": 6
+    },
+    {
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "best_test_mae": 0.3523203134536743,
+      "best_epoch": 30,
+      "metrics_test": {
+        "mae": 0.3523203134536743,
+        "rmse": 0.4589279890060425,
+        "r2": 0.44300151589302694,
+        "pearson": 0.6722143888473511,
+        "spearman": 0.6467495827711576
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp007.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step06_exp002.pt",
+      "parent_active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "added_channel": 1,
+      "step_k": 7
+    },
+    {
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "best_test_mae": 0.37314745783805847,
+      "best_epoch": 28,
+      "metrics_test": {
+        "mae": 0.37314745783805847,
+        "rmse": 0.5079931616783142,
+        "r2": 0.317534608438821,
+        "pearson": 0.6030735969543457,
+        "spearman": 0.6221834816219985
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp002.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step07_exp007.pt",
+      "parent_active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "added_channel": 8,
+      "step_k": 8
+    },
+    {
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "best_test_mae": 0.38013672828674316,
+      "best_epoch": 23,
+      "metrics_test": {
+        "mae": 0.38013672828674316,
+        "rmse": 0.48568642139434814,
+        "r2": 0.3761546878681812,
+        "pearson": 0.6171062588691711,
+        "spearman": 0.6097258115857263
+      },
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step09_exp001.pt",
+      "parent_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_beam3/_candidates/beam_step08_exp002.pt",
+      "parent_active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "added_channel": 7,
+      "step_k": 9
+    }
+  ],
+  "path_checkpoints": [
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step01_k1.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step02_k2.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step03_k3.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step04_k4.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step05_k5.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step06_k6.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step07_k7.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step08_k8.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_beam3/beam_best_path_step09_k9.pt"
+  ]
+}

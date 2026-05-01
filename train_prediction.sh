@@ -1,0 +1,1 @@
+python3 train_prediction.py --emg_channels 0,6

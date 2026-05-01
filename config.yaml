@@ -17,7 +17,7 @@ lr: 0.003
 weight_decay: 0.0001
 
 # 仅 1_train_prediction（ResNet 窗口回归）读取；不覆盖上面的 weight_decay，避免影响 train.py
-prediction_weight_decay: 0.005
+prediction_weight_decay: 0.0005
 resnet_dropout: 0.15
 resnet_head_dropout: 0.15
 max_grad_norm: 1.0

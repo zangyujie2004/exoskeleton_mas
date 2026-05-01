@@ -1,0 +1,795 @@
+{
+  "n_trains": 45,
+  "selection_metric": "test_mae_masked",
+  "test_eval_on_path_models": [
+    {
+      "step_k": 1,
+      "k_channels": 1,
+      "active": [
+        6
+      ],
+      "mae": 0.3544970154762268,
+      "rmse": 0.48740050196647644,
+      "r2": 0.3717436204180965,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step01_k1.pt",
+      "delta_mae_vs_full": -0.06607303023338318,
+      "mae_improvement_vs_full": 0.06607303023338318
+    },
+    {
+      "step_k": 2,
+      "k_channels": 2,
+      "active": [
+        0,
+        6
+      ],
+      "mae": 0.3397557735443115,
+      "rmse": 0.42773330211639404,
+      "r2": 0.5161496030916968,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step02_k2.pt",
+      "delta_mae_vs_full": -0.08081427216529846,
+      "mae_improvement_vs_full": 0.08081427216529846
+    },
+    {
+      "step_k": 3,
+      "k_channels": 3,
+      "active": [
+        0,
+        3,
+        6
+      ],
+      "mae": 0.3540181517601013,
+      "rmse": 0.45478758215904236,
+      "r2": 0.45300650527032793,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step03_k3.pt",
+      "delta_mae_vs_full": -0.06655189394950867,
+      "mae_improvement_vs_full": 0.06655189394950867
+    },
+    {
+      "step_k": 4,
+      "k_channels": 4,
+      "active": [
+        0,
+        3,
+        5,
+        6
+      ],
+      "mae": 0.3302476704120636,
+      "rmse": 0.4256168603897095,
+      "r2": 0.5209260017152773,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step04_k4.pt",
+      "delta_mae_vs_full": -0.09032237529754639,
+      "mae_improvement_vs_full": 0.09032237529754639
+    },
+    {
+      "step_k": 5,
+      "k_channels": 5,
+      "active": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "mae": 0.3501524031162262,
+      "rmse": 0.4341488182544708,
+      "r2": 0.5015263869371807,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step05_k5.pt",
+      "delta_mae_vs_full": -0.07041764259338379,
+      "mae_improvement_vs_full": 0.07041764259338379
+    },
+    {
+      "step_k": 6,
+      "k_channels": 6,
+      "active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "mae": 0.3282301127910614,
+      "rmse": 0.4261028468608856,
+      "r2": 0.5198312960837681,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step06_k6.pt",
+      "delta_mae_vs_full": -0.09233993291854858,
+      "mae_improvement_vs_full": 0.09233993291854858
+    },
+    {
+      "step_k": 7,
+      "k_channels": 7,
+      "active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "mae": 0.36415162682533264,
+      "rmse": 0.47816455364227295,
+      "r2": 0.39532820658120804,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step07_k7.pt",
+      "delta_mae_vs_full": -0.056418418884277344,
+      "mae_improvement_vs_full": 0.056418418884277344
+    },
+    {
+      "step_k": 8,
+      "k_channels": 8,
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "mae": 0.3812226355075836,
+      "rmse": 0.5437860488891602,
+      "r2": 0.2179741124775454,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step08_k8.pt",
+      "delta_mae_vs_full": -0.03934741020202637,
+      "mae_improvement_vs_full": 0.03934741020202637
+    },
+    {
+      "step_k": 9,
+      "k_channels": 9,
+      "active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "mae": 0.42057004570961,
+      "rmse": 0.5636292099952698,
+      "r2": 0.15985945792275913,
+      "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step09_k9.pt",
+      "delta_mae_vs_full": 0.0,
+      "mae_improvement_vs_full": 0.0
+    }
+  ],
+  "best_on_test_mae": {
+    "step_k": 6,
+    "k_channels": 6,
+    "active": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "mae": 0.3282301127910614,
+    "rmse": 0.4261028468608856,
+    "r2": 0.5198312960837681,
+    "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step06_k6.pt"
+  },
+  "test_mae_full_model_path": 0.42057004570961,
+  "greedy_steps": [
+    {
+      "step_k": 1,
+      "winner_active": [
+        6
+      ],
+      "winner_best_test_mae": 0.3544970154762268,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0
+          ],
+          "best_test_mae": 0.35922011733055115,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            1
+          ],
+          "best_test_mae": 0.46669918298721313,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            2
+          ],
+          "best_test_mae": 0.41657641530036926,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            3
+          ],
+          "best_test_mae": 0.4286234676837921,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand03.pt"
+        },
+        {
+          "candidate_index": 4,
+          "active": [
+            4
+          ],
+          "best_test_mae": 0.3846759498119354,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand04.pt"
+        },
+        {
+          "candidate_index": 5,
+          "active": [
+            5
+          ],
+          "best_test_mae": 0.4140150249004364,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand05.pt"
+        },
+        {
+          "candidate_index": 6,
+          "active": [
+            6
+          ],
+          "best_test_mae": 0.3544970154762268,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand06.pt"
+        },
+        {
+          "candidate_index": 7,
+          "active": [
+            7
+          ],
+          "best_test_mae": 0.3545699715614319,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand07.pt"
+        },
+        {
+          "candidate_index": 8,
+          "active": [
+            8
+          ],
+          "best_test_mae": 0.4580304026603699,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step01_cand08.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step01_k1.pt"
+    },
+    {
+      "step_k": 2,
+      "winner_active": [
+        0,
+        6
+      ],
+      "winner_best_test_mae": 0.3397557735443115,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            6
+          ],
+          "best_test_mae": 0.3397557735443115,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            1,
+            6
+          ],
+          "best_test_mae": 0.40382716059684753,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            2,
+            6
+          ],
+          "best_test_mae": 0.42953693866729736,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            3,
+            6
+          ],
+          "best_test_mae": 0.37307167053222656,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand03.pt"
+        },
+        {
+          "candidate_index": 4,
+          "active": [
+            4,
+            6
+          ],
+          "best_test_mae": 0.36682233214378357,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand04.pt"
+        },
+        {
+          "candidate_index": 5,
+          "active": [
+            5,
+            6
+          ],
+          "best_test_mae": 0.36033475399017334,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand05.pt"
+        },
+        {
+          "candidate_index": 6,
+          "active": [
+            6,
+            7
+          ],
+          "best_test_mae": 0.40237361192703247,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand06.pt"
+        },
+        {
+          "candidate_index": 7,
+          "active": [
+            6,
+            8
+          ],
+          "best_test_mae": 0.4172356128692627,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step02_cand07.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step02_k2.pt"
+    },
+    {
+      "step_k": 3,
+      "winner_active": [
+        0,
+        3,
+        6
+      ],
+      "winner_best_test_mae": 0.3540181517601013,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            6
+          ],
+          "best_test_mae": 0.3834105134010315,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            6
+          ],
+          "best_test_mae": 0.3730003535747528,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            0,
+            3,
+            6
+          ],
+          "best_test_mae": 0.3540181517601013,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            0,
+            4,
+            6
+          ],
+          "best_test_mae": 0.366524338722229,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand03.pt"
+        },
+        {
+          "candidate_index": 4,
+          "active": [
+            0,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3571852743625641,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand04.pt"
+        },
+        {
+          "candidate_index": 5,
+          "active": [
+            0,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3625609874725342,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand05.pt"
+        },
+        {
+          "candidate_index": 6,
+          "active": [
+            0,
+            6,
+            8
+          ],
+          "best_test_mae": 0.4524797201156616,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step03_cand06.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step03_k3.pt"
+    },
+    {
+      "step_k": 4,
+      "winner_active": [
+        0,
+        3,
+        5,
+        6
+      ],
+      "winner_best_test_mae": 0.3302476704120636,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            3,
+            6
+          ],
+          "best_test_mae": 0.3635424077510834,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            3,
+            6
+          ],
+          "best_test_mae": 0.3836073577404022,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            0,
+            3,
+            4,
+            6
+          ],
+          "best_test_mae": 0.3738166093826294,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            0,
+            3,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3302476704120636,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand03.pt"
+        },
+        {
+          "candidate_index": 4,
+          "active": [
+            0,
+            3,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3790213167667389,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand04.pt"
+        },
+        {
+          "candidate_index": 5,
+          "active": [
+            0,
+            3,
+            6,
+            8
+          ],
+          "best_test_mae": 0.3625201880931854,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step04_cand05.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step04_k4.pt"
+    },
+    {
+      "step_k": 5,
+      "winner_active": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "winner_best_test_mae": 0.3501524031162262,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            3,
+            5,
+            6
+          ],
+          "best_test_mae": 0.36380764842033386,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step05_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            3,
+            5,
+            6
+          ],
+          "best_test_mae": 0.36124905943870544,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step05_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            0,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3501524031162262,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step05_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            0,
+            3,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.36202773451805115,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step05_cand03.pt"
+        },
+        {
+          "candidate_index": 4,
+          "active": [
+            0,
+            3,
+            5,
+            6,
+            8
+          ],
+          "best_test_mae": 0.4312216341495514,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step05_cand04.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step05_k5.pt"
+    },
+    {
+      "step_k": 6,
+      "winner_active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "winner_best_test_mae": 0.3282301127910614,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.40031540393829346,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step06_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3282301127910614,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step06_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.377974271774292,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step06_cand02.pt"
+        },
+        {
+          "candidate_index": 3,
+          "active": [
+            0,
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "best_test_mae": 0.3555757999420166,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step06_cand03.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step06_k6.pt"
+    },
+    {
+      "step_k": 7,
+      "winner_active": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "winner_best_test_mae": 0.36415162682533264,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "best_test_mae": 0.3673580586910248,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step07_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "best_test_mae": 0.3773546814918518,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step07_cand01.pt"
+        },
+        {
+          "candidate_index": 2,
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "best_test_mae": 0.36415162682533264,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step07_cand02.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step07_k7.pt"
+    },
+    {
+      "step_k": 8,
+      "winner_active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8
+      ],
+      "winner_best_test_mae": 0.3812226355075836,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8
+          ],
+          "best_test_mae": 0.3812226355075836,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step08_cand00.pt"
+        },
+        {
+          "candidate_index": 1,
+          "active": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "best_test_mae": 0.4107242524623871,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step08_cand01.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step08_k8.pt"
+    },
+    {
+      "step_k": 9,
+      "winner_active": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "winner_best_test_mae": 0.42057004570961,
+      "candidates": [
+        {
+          "candidate_index": 0,
+          "active": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "best_test_mae": 0.42057004570961,
+          "checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/_candidates/step09_cand00.pt"
+        }
+      ],
+      "path_checkpoint": "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step09_k9.pt"
+    }
+  ],
+  "path_checkpoints": [
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step01_k1.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step02_k2.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step03_k3.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step04_k4.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step05_k5.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step06_k6.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step07_k7.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step08_k8.pt",
+    "/data/zyj/project_mas/checkpoints/greedy_forward_path/greedy_path_step09_k9.pt"
+  ]
+}

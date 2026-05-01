@@ -1,6 +1,5 @@
 runs/
 checkpoints/
-*.pt
 *.pth
 *.ckpt
 *.onnx
@@ -26,5 +25,6 @@ coverage.xml
 htmlcov/
 data/
 data/init_data/
-
+*.pkl
 init_segment_cache.pkl
+/window_vis

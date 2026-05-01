@@ -38,7 +38,7 @@ class BasicBlock1D(nn.Module):
 
 
 class ResNet1DBase(nn.Module):
-    """1D ResNet backbone for EMG input: x shape (B, 9, T)."""
+    """1D ResNet for EMG ``(B, 9, T)``: stacked convs + BN + pool + linear head only — no self-attention (low latency)."""
 
     def __init__(
         self,
